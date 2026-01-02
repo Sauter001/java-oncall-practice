@@ -1,7 +1,10 @@
 package oncall.controller;
 
+import oncall.domain.DutySchedule;
+import oncall.domain.Staffs;
 import oncall.domain.WorkingDate;
 import oncall.error.OnCallException;
+import oncall.service.ScheduleManager;
 import oncall.view.ConsoleView;
 
 import java.util.function.Supplier;
@@ -15,7 +18,13 @@ public class MainController {
 
     public void run() {
         WorkingDate workingDate = view.readWorkingDate();
-
+        DutySchedule dutySchedule = retry(() -> {
+            Staffs weekdaySchedule = view.readWeekdayStaffs();
+            Staffs holidaySchedule = view.readHolidayStaffs();
+            ScheduleManager manager = new ScheduleManager(workingDate, weekdaySchedule, holidaySchedule);
+            return manager.scheduleDuty();
+        });
+        view.displaySchedule(dutySchedule.toScheduleDtos());
     }
 
     private void retry(Runnable task) {

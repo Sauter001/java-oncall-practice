@@ -2,12 +2,11 @@ package oncall.domain;
 
 import oncall.error.InvalidInputException;
 
-public record Month(int monthValue) {
-
+public record MonthInput(int monthValue) {
     public static final int MIN_VAL = 1;
     public static final int MAX_VAL = 12;
 
-    public Month {
+    public MonthInput {
         validateRange(monthValue);
     }
 
