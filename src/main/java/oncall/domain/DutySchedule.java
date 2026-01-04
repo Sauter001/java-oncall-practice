@@ -11,25 +11,29 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class DutySchedule {
-    private final Map<MonthDay, Duty> scheduleMap = new TreeMap<>();
+    private final Map<MonthDay, Duty> scheduleMap;
 
-    public void putSchedule(MonthDay monthDay, DayOfWeek dayOfWeek, Staff staff) {
-        Duty duty = new Duty(dayOfWeek, staff);
-        scheduleMap.put(monthDay, duty);
+    public DutySchedule(Map<MonthDay, Duty> scheduleMap) {
+        this.scheduleMap = scheduleMap;
     }
 
     public List<ScheduleDto> toDtos() {
+        Map<MonthDay, Duty> sortedMap = new TreeMap<>(scheduleMap);
         List<ScheduleDto> scheduleDtos = new ArrayList<>();
-        for (MonthDay monthDay : scheduleMap.keySet()) {
+        for (MonthDay monthDay : sortedMap.keySet()) {
             Duty duty = scheduleMap.get(monthDay);
-            ScheduleDto scheduleDto = new ScheduleDto(
-                    monthDay.getMonthValue(),
-                    monthDay.getDayOfMonth(),
-                    DateUtil.getDayNameFrom(duty.getDayOfWeek()),
-                    duty.getStaffName()
-            );
+            ScheduleDto scheduleDto = makeScheduleDto(monthDay, duty);
             scheduleDtos.add(scheduleDto);
         }
         return scheduleDtos;
+    }
+
+    private static ScheduleDto makeScheduleDto(MonthDay monthDay, Duty duty) {
+        return new ScheduleDto(
+                monthDay.getMonthValue(),
+                monthDay.getDayOfMonth(),
+                DateUtil.getDayNameFrom(duty.getDayOfWeek()),
+                duty.getStaffName()
+        );
     }
 }

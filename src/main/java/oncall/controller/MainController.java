@@ -34,8 +34,7 @@ public class MainController {
 
     private void processScheduling(DateForm dateForm, StaffList weekdayStaffList, StaffList holidayStaffList) {
         DutyScheduler dutyScheduler = new DutyScheduler(dateForm, weekdayStaffList, holidayStaffList);
-        DutySchedule schedule = dutyScheduler.schedule();
-        outputView.displaySchedules(schedule.toDtos());
+        outputView.displaySchedules(dutyScheduler.schedule());
     }
 
     private void checkStaffListIntegrity(StaffList weekdayStaffList, StaffList holidayStaffList) {

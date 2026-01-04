@@ -33,6 +33,10 @@ public final class DateUtil {
         }
     }
 
+    public static boolean isHoliday(MonthDay monthDay, DayOfWeek dayOfWeek) {
+        return isWeekend(dayOfWeek) || isPublicHoliday(monthDay, dayOfWeek);
+    }
+
     public static boolean isWeekend(DayOfWeek week) {
         return week.equals(DayOfWeek.SATURDAY) || week.equals(DayOfWeek.SUNDAY);
     }

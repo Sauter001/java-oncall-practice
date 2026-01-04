@@ -3,10 +3,11 @@ package oncall.domain;
 import oncall.exception.InvalidInputException;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-public class StaffList {
+public class StaffList implements Iterable<Staff> {
     private static final int MAX_STAFF_LENGTH = 35;
     private static final int MIN_STAFF_LENGTH = 5;
     private final List<Staff> staffList;
@@ -42,5 +43,14 @@ public class StaffList {
 
     public boolean contains(Staff staff) {
         return this.staffList.contains(staff);
+    }
+
+    @Override
+    public Iterator<Staff> iterator() {
+        return this.staffList.iterator();
+    }
+
+    public List<Staff> getStaffList() {
+        return List.copyOf(this.staffList);
     }
 }

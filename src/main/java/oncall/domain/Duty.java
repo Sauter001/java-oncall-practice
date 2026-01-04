@@ -15,6 +15,10 @@ public class Duty {
         return dayOfWeek;
     }
 
+   public boolean hasSameStaff(Staff staff) {
+        return this.staff.equals(staff);
+   }
+
     public String getStaffName() {
         return this.staff.getName();
     }
