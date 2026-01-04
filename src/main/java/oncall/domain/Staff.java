@@ -9,6 +9,10 @@ public class Staff {
         this.name = name;
     }
 
+    public String getName() {
+        return name;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Staff staff)) {
