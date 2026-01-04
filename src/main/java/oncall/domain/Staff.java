@@ -1,12 +1,22 @@
 package oncall.domain;
 
+import oncall.exception.InvalidInputException;
+
 import java.util.Objects;
 
 public class Staff {
-    private String name;
+    public static final int MAX_NAME_LEN = 5;
+    private final String name;
 
     public Staff(String name) {
+        validateNameLength(name);
         this.name = name;
+    }
+
+    private void validateNameLength(String name) {
+        if (name.length() > MAX_NAME_LEN) {
+            throw new InvalidInputException();
+        }
     }
 
     public String getName() {
