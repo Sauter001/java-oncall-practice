@@ -1,6 +1,10 @@
 package oncall.controller;
 
+import oncall.domain.Staff;
+import oncall.domain.StaffList;
+import oncall.domain.StaffSet;
 import oncall.domain.dto.DateForm;
+import oncall.exception.InvalidInputException;
 import oncall.exception.OnCallException;
 import oncall.view.InputView;
 import oncall.view.OutputView;
@@ -18,6 +22,20 @@ public class MainController {
 
     public void run() {
         DateForm dateForm = inputView.readDateForm();
+        retry(() -> {
+            StaffList weekdayStaffList = inputView.readWeekdayStaffs();
+            StaffList holidayStaffList = inputView.readHolidayStaffs();
+            checkStaffListIntegrity(weekdayStaffList, holidayStaffList);
+        });
+    }
+
+    private void checkStaffListIntegrity(StaffList weekdayStaffList, StaffList holidayStaffList) {
+        StaffSet staffSet = weekdayStaffList.toSet();
+        for (Staff staff : staffSet) {
+            if (!holidayStaffList.contains(staff)) {
+                throw new InvalidInputException();
+            }
+        }
     }
 
     private void retry(Runnable task) {
