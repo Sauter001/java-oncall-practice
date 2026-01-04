@@ -28,6 +28,7 @@ public class DateFormParser implements Parser<DateForm> {
     private static DateForm createDateForm(List<String> tokens) {
         try {
             int month = Integer.parseInt(tokens.get(0));
+
             String dayExpr = tokens.get(1);
             return new DateForm(Month.of(month), DateUtil.getDayOfWeekFrom(dayExpr));
         } catch (DateTimeException | NumberFormatException e) {

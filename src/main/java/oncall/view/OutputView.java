@@ -17,7 +17,7 @@ public class OutputView {
     public void displaySchedules(List<ScheduleDto> scheduleDtos) {
         System.out.println();
         for (ScheduleDto dto : scheduleDtos) {
-            System.out.printf("%d월 %d일 %s%s %s\n",
+            System.out.printf("%d월 %d일 %s%s %s%n",
                     dto.month(),
                     dto.day(),
                     dto.dayName(),
